@@ -12,10 +12,6 @@ public class ShoppingCart {
         int delIndex;
         boolean stop= false;
 
-        cart.add("apple");
-        cart.add("orange");
-        cart.add("pear");
-
         //main loop
         while(!stop){
             input = cons.readLine("> ");
@@ -48,8 +44,36 @@ public class ShoppingCart {
                         System.out.println("Your cart is empty!");
                     }
                     break;
+
+                case "del":
+                    if(terms.length < 2){
+                        System.out.println("Please provide and index in order to delete");
+                    }else{
+                        try{
+                            delIndex = Integer.parseInt(terms[1]) - 1;
+                            System.out.println(delIndex);
+                            if(delIndex >= 0 && delIndex < cart.size()){
+                                System.out.printf("Deleted %s from cart\n", cart.get(delIndex));
+                                cart.remove(delIndex);
+                            }else{
+                                showIncorrectItemIndex();
+                            }
+                        }catch(NumberFormatException e){
+                            showIncorrectItemIndex();
+                        }
+                    
+                    }
+                    break;
+                case "end":
+                    stop = true;
+                    break;
+                default:
             }
 
         }
+        System.out.println("Thank you for shopping with us!");
+    }
+    private static void showIncorrectItemIndex() {
+        System.out.println("Incorrect Item Index");
     }
 }
