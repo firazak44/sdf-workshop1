@@ -5,7 +5,11 @@ import java.io.Console;
 
 public class ShoppingCart {
     public static void main(String[] args){
+        //Welcome msg
         System.out.println("Shopping cart");
+
+        //Declare Variables//
+        //Set numbered list for String input
         List<String> cart = new LinkedList<>();
         Console cons = System.console();
         String input;
@@ -14,12 +18,26 @@ public class ShoppingCart {
 
         //main loop
         while(!stop){
+            //Waiting for keyed input
             input = cons.readLine("> ");
+            //Printout keyed input
             System.out.printf("READ: %s\n", input);
             String[] terms = input.split(" ");
             String cmd = terms[0];
 
-            switch(cmd){
+            //Switch to toggle between 3 cases (ie; list, add, delete)
+            switch(cmd){   
+                case "list":
+                    if(cart.size()>0){
+                        for(int i=0; i < cart.size(); i++){
+                            //List printed out will start from 1. ---
+                            System.out.printf("%d. %s\n", (i+1), cart.get(i));
+                        }
+                    }else{
+                        System.out.println("Your cart is empty!");
+                    }
+                break;
+
                 case "add":
                     for(int i=1; i < terms.length; i++){
                         boolean found = false;
@@ -35,15 +53,6 @@ public class ShoppingCart {
                         }
                     }
                 break;
-            case "list":
-                    if(cart.size()>0){
-                        for(int i=0; i < cart.size(); i++){
-                            System.out.printf("%d. %s\n", (i+1), cart.get(i));
-                        }
-                    }else{
-                        System.out.println("Your cart is empty!");
-                    }
-                    break;
 
                 case "del":
                     if(terms.length < 2){
@@ -61,18 +70,19 @@ public class ShoppingCart {
                         }catch(NumberFormatException e){
                             showIncorrectItemIndex();
                         }
-                    
                     }
-                    break;
-                case "end":
+                break;
+                //When finished with shopping, exit switch-case
+                case "checkout":
                     stop = true;
                     break;
                 default:
             }
-
         }
+        //Show message if done with cart-shopping
         System.out.println("Thank you for shopping with us!");
     }
+    //Show message if incorrect index is inputted
     private static void showIncorrectItemIndex() {
         System.out.println("Incorrect Item Index");
     }
